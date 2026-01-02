@@ -49,7 +49,8 @@ function Favourite() {
       <h2 className="mt-24 capitalize text-3xl font-bold mb-6 md:text-4xl">
         Yêu Thích
       </h2>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-14">
+
+      <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
         {movies.map((movie) => (
           <div key={movie.slug}>
             <div className="relative rounded-lg overflow-hidden group">
@@ -59,48 +60,52 @@ function Favourite() {
                 color="red"
                 height={28}
               />
+
               <Image
                 src={movie.thumb_url}
                 alt={movie.name}
                 className="aspect-[2/3]"
               />
+
               <Link
                 href={`/movies/${movie.slug}`}
                 className="absolute inset-0 z-10 md:hidden"
               />
-              <div className="absolute inset-0 bg-black/60 none flex-col items-center justify-center gap-4 text-sm font-bold opacity-0 group-hover:opacity-100 duration-300 text-center hidden md:flex">
+
+              <div className="absolute inset-0 bg-black/60 hidden md:flex flex-col items-center justify-center gap-4 opacity-0 group-hover:opacity-100 duration-300">
                 <button
-                  className="rounded-full w-36 px-6 py-2.5 -translate-y-3 group-hover:translate-y-0 duration-300 bg-[#f00]"
+                  className="rounded-full w-36 px-6 py-2.5 bg-red-600"
                   onClick={() =>
-                    dispatch({
-                      type: "REMOVE",
-                      payload: {
-                        slug: movie.slug,
-                      },
-                    })
+                    dispatch(
+                      {
+                        type: "REMOVE",
+                        payload: { slug: movie.slug },
+                      } as any
+                    )
                   }
                 >
                   Bỏ Thích
                 </button>
+
                 <Link
                   href={`/movies/${movie.slug}`}
-                  className="rounded-full border-2 bg- border-primary w-36 px-6 py-2.5 bg-black/70 translate-y-3 group-hover:translate-y-0 duration-300 hover:bg-primary hover:text-black"
+                  className="rounded-full border-2 w-36 px-6 py-2.5 bg-black/70 hover:bg-primary hover:text-black"
                 >
                   Chi Tiết
                 </Link>
               </div>
             </div>
+
             <Link
               href={`/movies/${movie.slug}`}
-              className="hover:text-primary duration-150 text-lg font-bold mt-1.5 block"
+              className="block mt-2 font-bold line-clamp-2 hover:text-primary"
             >
-              <abbr title={movie.name} className="no-underline line-clamp-2">
-                {movie.name}
-              </abbr>
+              {movie.name}
             </Link>
           </div>
         ))}
       </div>
+
       <Pagination
         currentPage={page}
         totalItems={state.favMovies.length}
